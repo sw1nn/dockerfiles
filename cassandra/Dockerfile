@@ -24,7 +24,7 @@ RUN echo "deb http://debian.datastax.com/community stable main" >> /etc/apt/sour
 
 RUN apt-key adv --keyserver keys.gnupg.net --recv-keys B999A372
 
-RUN apt-get update && apt-get -y --force-yes install dsc12=1.2.10-1 cassandra=1.2.10 apt-utils
+RUN apt-get update && apt-get -y --force-yes install dsc12=1.2.12-1 cassandra=1.2.12 apt-utils
 
 # Unclear to me whether this is an issue with the datastax env code, but
 # for the version of jdk we're using 228k is the minimum accepted stack size,
