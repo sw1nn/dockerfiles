@@ -1,18 +1,10 @@
-FROM ubuntu
-MAINTAINER Neale Swinnerton <neale@sw1nn.com>
+FROM mastodonc/basejava
 
-RUN echo "deb http://archive.ubuntu.com/ubuntu precise main universe" > /etc/apt/sources.list
-RUN apt-get update
-RUN apt-get upgrade -y
+RUN curl http://www.mirrorservice.org/sites/ftp.apache.org/kafka/0.8.1.1/kafka_2.10-0.8.1.1.tgz | \
+    tar -xzf - -C /opt --transform 's@\([a-z-]*\)-[0-9\.-]*@\1@'
 
-RUN apt-get install -y -q openjdk-7-jre-headless curl 
-RUN curl -o /opt/kafka_2.8.0-0.8.0.tgz https://dist.apache.org/repos/dist/release/kafka/0.8.0/kafka_2.8.0-0.8.0.tar.gz
-RUN tar -xzf /opt/kafka_2.8.0-0.8.0.tgz -C /opt/
+ADD kafka-start.sh /usr/local/bin/kafka-start
+RUN chmod +x /usr/local/bin/kafka-start
 
-ENV JAVA_HOME /usr/lib/jvm/java-7-openjdk-amd64
-
-ADD kafka-start.sh /usr/local/bin/kafka-start.sh
-RUN chmod +x /usr/local/bin/kafka-start.sh
-
-CMD ["/usr/local/bin/kafka-start.sh"]
+CMD ["kafka-start"]
 EXPOSE 9092

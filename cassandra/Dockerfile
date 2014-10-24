@@ -1,9 +1,4 @@
-FROM ubuntu
-MAINTAINER Neale Swinnerton
-
-############################################
-# needed for add-apt-repository
-RUN apt-get update && apt-get -y install python-software-properties
+FROM mastodonc/basejava
 
 ############################################
 # Install oracle jdk
@@ -43,5 +38,3 @@ CMD ["/usr/sbin/cassandra","-f"]
 # 9042 is CQL, 9160 is thrift
 # TODO - remove thrift?
 EXPOSE 9042 9160
-
-
