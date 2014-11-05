@@ -30,10 +30,13 @@ sed -i \
     ${LOG_CONFIG_FILE}
 
 cat <<EOF >> ${LOG_CONFIG_FILE}
+
+# Add Logstash Appender
 log4j.appender.logstashAppender=org.apache.log4j.net.SocketAppender
 log4j.appender.logstashAppender.Port=${LOGSTASH_PORT_4561_TCP_PORT}
 log4j.appender.logstashAppender.RemoteHost=${LOGSTASH_PORT_4561_TCP_ADDR}
 log4j.appender.logstashAppender.ReconnectionDelay=30000
+
 log4j.logger.kafka=INFO, kafkaAppender, logstashAppender
 EOF
 
