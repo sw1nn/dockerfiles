@@ -1,6 +1,7 @@
 #!/bin/bash
 
 LOG_CONFIG_FILE=/kafka/config/log4j.properties
+SERVER_CONFIG_FILE=/kafka/config/server.properties
 
 BROKER_ID=${KAFKA_BROKER_ID:-0}
 
@@ -15,7 +16,13 @@ sed -i \
     -e "s@#host\.name=localhost@host.name=${HOSTNAME}@" \
     -e "s@broker\.id=0@broker.id=${BROKER_ID}@" \
     -e "s@log\.dirs=/tmp/kafka-logs@log.dirs=${DATA_DIR}@" \
-    /kafka/config/server.properties
+    ${SERVER_CONFIG_FILE}
+
+if [ ! -z "${ADVERTISED_PORT}" ]; then
+    sed -i \
+	-e "s@#advertised\.port=.*@advertised.port=${ADVERTISED_PORT}@" \
+	${SERVER_CONFIG_FILE}
+fi
 
 sed -i \
     -e "s@kafka.logs.dir=.*@kafka.logs.dir=${LOGS_DIR}/@" \
